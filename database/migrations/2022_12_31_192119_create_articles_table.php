@@ -14,7 +14,8 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->bigIncrements('id')->primary();
+            $table->id();
+            $table->tinyInteger('menu_id');
             $table->string('title');
             $table->string('description');
             $table->string('url')->unique();
@@ -22,8 +23,11 @@ class CreateArticlesTable extends Migration
             $table->string('image')->nullable();
             $table->text('intro')->nullable();
             $table->text('content')->nullable();
-            $table->tinyInteger('menu');
             $table->timestamps();
+            $table->foreign('menu_id')
+                ->references('id')
+                ->on('menus')
+                ->onDelete('SET NULL');
         });
     }
 
